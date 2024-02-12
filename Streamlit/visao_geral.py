@@ -1,5 +1,5 @@
 import streamlit as st
-from  plotagem import plot_pca, plot_elbow_method, plot_silhouette_coefficient
+from plotagem import plot_pca, plot_elbow_method, plot_silhouette_coefficient
 from scripts.data_cleaning import clean_data
 from data_preprocessing import scale_features, select_features,preprocess_data
 from data_analysis import plot_correlation_matrix,plot_feature_distribution
