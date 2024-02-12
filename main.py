@@ -23,14 +23,14 @@ def get_user_preferences():
     # Solicitar ao usuário suas preferências musicais
     favorite_artists = input("Quais são seus artistas favoritos? (separados por vírgula): ").split(',')
     favorite_songs = input("Quais são suas músicas favoritas? (separadas por vírgula): ").split(',')
-    
+
     return favorite_artists, favorite_songs
 
 def search_user_preferences(dataset, favorite_artists, favorite_songs):
     # Consultar o conjunto de dados para identificar músicas e artistas correspondentes
     user_favorite_songs = dataset[dataset['track_name'].isin(favorite_songs)]
     user_favorite_artists = dataset[dataset['artist(s)_name'].isin(favorite_artists)]
-    
+
     return user_favorite_songs, user_favorite_artists
 
 
@@ -71,7 +71,7 @@ def main():
 
     sample_size = 800
     dataset_sample = dataset.sample(n=sample_size, random_state=0)
-    
+
     show_basic_statistics(dataset_sample)
 
     # Preparação e normalização das características para todo o conjunto de dados
