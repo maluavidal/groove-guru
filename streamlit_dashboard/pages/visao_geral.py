@@ -1,18 +1,16 @@
 import streamlit as st
-from plotagem import plot_pca, plot_elbow_method, plot_silhouette_coefficient
+from info.plotagem import plot_pca, plot_elbow_method, plot_silhouette_coefficient
 from scripts.data_cleaning import clean_data
-from data_preprocessing import scale_features, select_features,preprocess_data
-from data_analysis import plot_correlation_matrix,plot_feature_distribution
-from clustering import calculate_elbow_silhouette
-
-
+from info.data_preprocessing import scale_features, select_features,preprocess_data
+from info.data_analysis import plot_correlation_matrix,plot_feature_distribution
+from info.clustering import calculate_elbow_silhouette
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 st.title("Análise de Dados com Streamlit")
 
 # Carregar e limpar os dados
 df = clean_data()
-file_path = 'archive/all/spotify-2023.csv'
+file_path = 'streamlit_dashboard/archive/all/spotify-2023.csv'
 df = preprocess_data(file_path)
 
 features = [

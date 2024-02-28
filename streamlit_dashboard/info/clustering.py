@@ -23,7 +23,7 @@ def evaluate_model(model, X_test, y_test):
 def calculate_elbow_silhouette(X, k_range, n_samples=1000, max_iter=300, tol=1e-4):
     inertia_values = []
     silhouette_scores = []
-    
+
     if X.shape[0] > n_samples:
         indices = np.random.choice(X.shape[0], n_samples, replace=False)
         X_sample = X[indices]
@@ -37,7 +37,7 @@ def calculate_elbow_silhouette(X, k_range, n_samples=1000, max_iter=300, tol=1e-
         if k > 1:
             silhouette_avg = silhouette_score(X_sample, cluster_labels)
             silhouette_scores.append(silhouette_avg)
-        
+
     return inertia_values, silhouette_scores
 
 def optimal_number_of_clusters(wcss):
@@ -59,7 +59,7 @@ def optimal_number_of_clusters(wcss):
         numerator = abs((y2-y1) * x0 - (x2-x1) * y0 + x2 * y1 - y2 * x1)
         denominator = sqrt((y2 - y1) ** 2 + (x2 - x1) ** 2)
         distances.append(numerator / denominator)
-    
+
     return distances.index(max(distances)) + 2
 
 def train_kmeans_model(X, n_clusters):

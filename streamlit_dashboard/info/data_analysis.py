@@ -20,13 +20,13 @@ def plot_feature_distribution(dataset, features, rows_per_group=4):
         fig, axes = plt.subplots(len(group_features), 1, figsize=(10, 4 * len(group_features)))
         if len(group_features) == 1:  # Ajuste para o caso de um único gráfico
             axes = [axes]
-        
+
         for i, feature in enumerate(group_features):
             sns.histplot(dataset[feature], kde=True, ax=axes[i])
             axes[i].set_title(f'Distribuição de {feature}')
             axes[i].set_xlabel(feature)
             axes[i].set_ylabel('Frequência')
-        
+
         plt.tight_layout()
         plt.show()
 

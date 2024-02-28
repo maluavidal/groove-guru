@@ -1,9 +1,7 @@
-from data_preprocessing import preprocess_data, select_features, scale_features
-from clustering import calculate_elbow_silhouette, optimal_number_of_clusters, train_kmeans_model, train_random_forest, train_test_split, evaluate_model, train_svm, train_knn, train_gradient_boosting
-from recmendacao import search_songs, user_song_selection, recommend_songs, open_spotify_track
-from plotagem import plot_pca, plot_elbow_method, plot_silhouette_coefficient
-from data_analysis import show_basic_statistics, plot_feature_distribution, plot_correlation_matrix, plot_pairwise_relationships, analyse_clusters
-from sklearn.preprocessing import StandardScaler
+from streamlit_dashboard.info.data_preprocessing import preprocess_data, select_features, scale_features
+from streamlit_dashboard.info.clustering import calculate_elbow_silhouette, optimal_number_of_clusters, train_kmeans_model, train_random_forest, train_test_split, evaluate_model
+from recmendacao import recommend_songs, open_spotify_track
+from streamlit_dashboard.info.data_analysis import show_basic_statistics, analyse_clusters
 import pandas as pd
 
 features = [
