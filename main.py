@@ -44,7 +44,7 @@ def build_user_training_dataset(user_favorite_songs, user_favorite_artists):
     return user_training_features, user_training_labels
 
 def assign_clusters_to_user_preferences(user_favorite_songs, user_favorite_artists, kmeans_model, scaler):
-    user_features = user_favorite_songs.append(user_favorite_artists)
+    user_features = user_favorite_songs._append(user_favorite_artists)
     user_features = user_features.drop(columns=['track_name', 'artist(s)_name'])  # Remover colunas não utilizadas
 
     # Selecionar apenas as características relevantes
