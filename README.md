@@ -9,3 +9,14 @@ Repositório da disciplina de Projeto Interdisciplinar para Sistemas de Informa�
     <li>Após <b>ativar</b> o ambiente virtual execute <code>pip install -r requirements.txt</code></li>
     <li>E por fim, para rodar o projeto execute: <code>streamlit run streamlit_dashboard/dashboard.py</code></li>
 </ol>
+
+## Dependências Utilizadas
+<ol>
+- pandas
+- sklearn
+- numpy
+- webbrowser
+- matplotlib
+- seaborn
+- scikit-learn
+</ol>
