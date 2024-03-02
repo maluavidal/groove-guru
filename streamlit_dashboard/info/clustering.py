@@ -1,7 +1,8 @@
-from sklearn.model_selection import train_test_split
 from sklearn.cluster import KMeans
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import silhouette_score, accuracy_score
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import silhouette_score, accuracy_score, recall_score, f1_score, precision_score
 from math import sqrt
 import numpy as np
 
@@ -12,11 +13,34 @@ def train_random_forest(X_train, y_train):
     rf_model.fit(X_train, y_train)
     return rf_model
 
+def train_svm(X_train, y_train):
+    """Treina o modelo SVM."""
+    svm_model = SVC(random_state=0)
+    svm_model.fit(X_train, y_train)
+    return svm_model
+
+def train_knn(X_train, y_train):
+    """Treina o modelo k-NN."""
+    knn_model = KNeighborsClassifier()
+    knn_model.fit(X_train, y_train)
+    return knn_model
+
+def train_gradient_boosting(X_train, y_train):
+    """Treina o modelo Gradient Boosting."""
+    gb_model = GradientBoostingClassifier(random_state=0)
+    gb_model.fit(X_train, y_train)
+    return gb_model
+
 def evaluate_model(model, X_test, y_test):
-    """Avalia o modelo de Random Forest."""
+    # Avalia o modelo com múltiplas métricas.
     y_pred = model.predict(X_test)
     accuracy = accuracy_score(y_test, y_pred)
-    print("Acurácia do modelo:", accuracy)
+    recall = recall_score(y_test, y_pred, average='weighted', zero_division=0)
+    f1 = f1_score(y_test, y_pred, average='weighted', zero_division=0)
+    precision = precision_score(y_test, y_pred, average='weighted', zero_division=0)
+
+    # Retorna as métricas como um dicionário
+    return {'accuracy': accuracy, 'recall': recall, 'f1': f1, 'precision': precision}
 
 
 # Seção de Clusterização

@@ -1,7 +1,8 @@
 from streamlit_dashboard.info.data_preprocessing import preprocess_data, select_features, scale_features
-from streamlit_dashboard.info.clustering import calculate_elbow_silhouette, optimal_number_of_clusters, train_kmeans_model, train_random_forest, train_test_split, evaluate_model
+from streamlit_dashboard.info.clustering import calculate_elbow_silhouette, optimal_number_of_clusters, train_kmeans_model, train_random_forest, evaluate_model, train_svm, train_knn, train_gradient_boosting
 from recmendacao import recommend_songs, open_spotify_track
 from streamlit_dashboard.info.data_analysis import show_basic_statistics, analyse_clusters
+from sklearn.model_selection import train_test_split
 import pandas as pd
 
 features = [
@@ -16,6 +17,31 @@ features = [
         'key',
         'mode'
     ]
+
+def compare_models(X_train, X_test, y_train, y_test):
+    models = {
+        'Random Forest': train_random_forest(X_train, y_train),
+        'SVM': train_svm(X_train, y_train),
+        'k-NN': train_knn(X_train, y_train),
+        'Gradient Boosting': train_gradient_boosting(X_train, y_train)
+    }
+
+    model_metrics = {}
+    for name, model in models.items():
+        print(f"Avaliando modelo: {name}")
+        metrics = evaluate_model(model, X_test, y_test)
+        model_metrics[name] = metrics
+
+    best_model = None
+    best_score = -1
+    for name, metrics in model_metrics.items():
+        score = (metrics['accuracy'] + metrics['recall'] + metrics['f1'] + metrics['precision']) / 4
+        if score > best_score:
+            best_model = name
+            best_score = score
+
+    print(f"Melhor modelo com base na pontuação geral: {best_model} (Pontuação: {best_score})")
+    return models[best_model]
 
 def get_user_preferences():
     # Solicitar ao usuário suas preferências musicais
@@ -104,14 +130,13 @@ def main():
     X_user, y_user = build_user_training_dataset(user_favorite_songs, user_favorite_artists)
 
     # Dividir o conjunto de dados do usuário em treinamento e teste
-    X_user_train, X_user_test, y_user_train, y_user_test = train_test_split(X_user, y_user, test_size=0.2, random_state=0)
+    X_train, X_test, y_train, y_test = train_test_split(X_user, y_user, test_size=0.2, random_state=0)
 
-    # Treinar e avaliar Random Forest com o conjunto de dados do usuário
-    rf_model_user = train_random_forest(X_user_train, y_user_train)
-    evaluate_model(rf_model_user, X_user_test, y_user_test)
+    # Comparar modelos e selecionar o melhor
+    best_model = compare_models(X_train, X_test, y_train, y_test)
 
     # Recomendar músicas com base nas preferências do usuário
-    recommendations = recommend_songs(X_user, dataset, features, scaler, kmeans_model, rf_model_user, num_recommendations=5)
+    recommendations = recommend_songs(X_user, dataset, features, scaler, kmeans_model, best_model, num_recommendations=5)
     print("Músicas recomendadas:")
     print(recommendations[['track_name', 'artist(s)_name']])
 
